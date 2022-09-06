@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"> Add new user </h1>
+            <div class="card-body">
+                <form th:action="@{/add}" th:object="${user}" method="POST">
+                    <div class="form-group">
+                        <label> Name </label>
+                        <input
+                                type="text"
+                                name="name"
+                                th:field="*{name}"
+                                class="form-control"
+                                placeholder="Enter Name"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label> Age </label>
+                        <input
+                                type="text"
+                                name="age"
+                                th:field="*{age}"
+                                class="form-control"
+                                placeholder="Enter age"
+                        />
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success">
+                            Add
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

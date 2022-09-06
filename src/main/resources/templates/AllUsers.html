@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1 class="text-center"> List User </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <a href="/add" class="btn btn-success btn-sm mb-3">Add user</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Action edit</th>
+            <th scope="col">Action delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="users: ${users}">
+            <td th:text="${users.id}"/>
+            <td th:text="${users.name}"/>
+            <td th:text="${users.age}"/>
+            <td><a th:href="@{edit/{id}(id=${users.id})}"
+                   class="btn btn-primary">Edit</a>
+            <td><a th:href="@{delete/{id}(id=${users.id})}"
+                   class="btn btn-danger">Delete</a>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
