@@ -1,21 +1,24 @@
-package ru.kata.spring.boot_security.demo.service;
+package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.model.User;
+import web.dao.UserDao;
+import web.model.User;
 
 import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
     private final UserDao userDao;
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    public UserServiceImp(UserDao userDao) {
+    public UserServiceImp(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
 
     @Override
     public List<User> allUsers() {
