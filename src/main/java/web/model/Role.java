@@ -18,7 +18,7 @@ import java.util.Collection;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "name")
     private String name;
 
@@ -33,8 +33,7 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public Role(int id, String name) {
-        this.id = id;
+    public Role(String name) {
         this.name = name;
     }
 
@@ -43,7 +42,7 @@ public class Role implements GrantedAuthority {
         return getName();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
