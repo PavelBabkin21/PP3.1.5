@@ -16,14 +16,12 @@ import web.repository.RoleRepository;
 import web.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
-@RequestMapping("/")
 public class MainController {
-    private  UserService userService;
-    private  RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserService userService;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public MainController(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -32,7 +30,7 @@ public class MainController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
     }
@@ -40,7 +38,7 @@ public class MainController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String allUsers(Model model) {
         model.addAttribute("users", userService.allUsers());
-        return "AllUsers";
+        return "users";
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -74,7 +72,7 @@ public class MainController {
     public String editPage(@PathVariable("id") long id, Model model) {
         model.addAttribute("roles", userService.listRoles());
         model.addAttribute("user", userService.getUser(id));
-        return "UserEdit";
+        return "edit";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
@@ -85,7 +83,7 @@ public class MainController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String addPage(Model model) {
         if (userService.listRoles().isEmpty()) {
             roleRepository.save(new Role("ROLE_ADMIN"));
@@ -93,10 +91,10 @@ public class MainController {
         }
         model.addAttribute("user", new User());
         model.addAttribute("roles", userService.listRoles());
-        return "UserAdd";
+        return "new";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String addUser(@ModelAttribute("User") User user, @RequestParam(value = "role") String role) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(userService.findRolesByName(role));

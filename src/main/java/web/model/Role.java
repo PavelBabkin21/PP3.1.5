@@ -12,19 +12,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "id")
     private long id;
     @Column(name = "name")
     private String name;
-
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
 
     public Role() {
     }
@@ -58,11 +57,4 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users info</title>
+
+    </style>
+</head>
+<body>
+<br>
+<h1>All users</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>username</th>
+        <th>password</th>
+    </tr>
+    <tbody>
+    <tr th:each="user : ${list}">
+        <td th:utext="${user.id}"></td>
+        <td th:utext="${user.name}"></td>
+        <td th:utext="${user.age}"></td>
+        <td th:utext="${user.username}"></td>
+        <td th:utext="${user.password}"></td>
+        <td>
+            <button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>
+            <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete">
+                <input type="submit" value="Delete"/>
+            </form>
+            <button><a th:href="@{/user/{id}(id=${user.id})}">User_page</a></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<button><a href="/new">Create user</a></button>
+<br>
+</body>
+</html>
