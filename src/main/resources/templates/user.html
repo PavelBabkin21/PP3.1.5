@@ -6,22 +6,22 @@
 </head>
 <body>
 <br>
-<h1>User panel</h1>
+<h1>Your information</h1>
 <table border="1">
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th>Age</th>
-        <th>Username</th>
+        <th>Username (Login)</th>
         <th>Password</th>
+        <th>Role</th>
     </tr>
     <tbody>
     <tr>
         <td th:utext="${user.id}"></td>
         <td th:utext="${user.name}"></td>
-        <td th:utext="${user.age}"></td>
         <td th:utext="${user.username}"></td>
         <td th:utext="${user.password}"></td>
+        <td th:utext="${user.roles}"></td>
     </tr>
     </tbody>
 </table>

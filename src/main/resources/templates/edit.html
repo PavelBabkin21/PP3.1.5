@@ -1,36 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:td="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit user</title>
 </head>
 <body>
-<form action="#" th:action="@{/edit}" th:object="${user}" method="patch">
-    <label for="id">ID</label>
-    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="name">
-    <label for="age">Age</label>
-    <input type="text" th:field="*{age}" id="age" placeholder="age">
-    <label for="username">Username</label>
-    <input type="text" th:field="*{username}" id="username" placeholder="username">
-    <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="password">
-    <br/>
-    <strong><label for="role">Role</label></strong>
-    <br/>
-    <select multiple class="custom-select w-100"
-            size="2" id="role" name="role">
-        <option
-                th:each="role : ${roles}"
-                th:text="${role.getRole()}"
-                th:value="${role.role}">
-        </option>
-    </select>
-    <br/>
-    <br/>
-    <input type="submit" value="Update User">
-    <br>
+<h2> Edit User </h2>
+
+<form th:method="patch" th:object="${user}" th:action="@{/edit/{id}(id=${user.getId()})}">
+    <table>
+
+        <tr>
+            <td><label for="name"> Name</label></td>
+            <td><input type="text" th:field="*{name}" id="name"></td>
+        </tr>
+
+        <tr>
+            <td><label for="username"> UserName</label></td>
+            <td><input type="text" th:field="*{username}" id="username"></td>
+        </tr>
+        <tr>
+            <td><label for="password"> Password</label></td>
+            <td><input type="text" th:field="*{password}" id="password"></td>
+        </tr>
+
+        <tr>
+
+            <td th:each="role : ${roles}">
+                <input type="checkbox" th:field="*{roles}"
+                       th:value="${role.id}">
+                <label th:text="${role.role}"></label>
+            </td>
+        </tr>
+
+    </table>
+
+    <input type="submit" th:value="Edit">
+
 </form>
+
 </body>
 </html>

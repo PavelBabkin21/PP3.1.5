@@ -2,89 +2,75 @@ package web.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import web.model.Role;
 import web.model.User;
 import web.repository.RoleRepository;
 import web.service.UserService;
 
+
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
 public class MainController {
-    private final UserService userService;
-    private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserService userService;
+    private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MainController(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
+    public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index() {
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/")
+    public String welcomeUsers() {
         return "index";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String allUsers(Model model) {
-        model.addAttribute("users", userService.allUsers());
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        model.addAttribute("list", userService.listUsers());
         return "users";
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public String userPage(Model model, @PathVariable("id") long id) {
+    @GetMapping("/user/{id}")
+    public String userPage(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUser(id));
         return "user";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String userPageName(Model model, Principal principal) {
+    @GetMapping("/user")
+    public String userPageForName(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         model.addAttribute("user", user);
         return "user";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPageName(Model model, Principal principal) {
+    @GetMapping("/admin")
+    public String adminPageForName(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
         return "admin";
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.delete(id);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String editPage(@PathVariable("id") long id, Model model) {
-        model.addAttribute("roles", userService.listRoles());
-        model.addAttribute("user", userService.getUser(id));
-        return "edit";
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String editUser(@ModelAttribute("user") User user, @PathVariable("id") long id,
-                           @RequestParam(value = "role") String role) {
-        user.setRoles(userService.findRolesByName(role));
-        userService.edit(id, user);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String addPage(Model model) {
+    @GetMapping("/new")
+    public String newUser(Model model) {
         if (userService.listRoles().isEmpty()) {
             roleRepository.save(new Role("ROLE_ADMIN"));
             roleRepository.save(new Role("ROLE_USER"));
@@ -94,11 +80,30 @@ public class MainController {
         return "new";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("User") User user, @RequestParam(value = "role") String role) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    @PostMapping()
+    public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userService.findRolesByName(role));
-        userService.add(user);
+        userService.addUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/edit/{id}")
+    public String editUser(@PathVariable("id") Long id, ModelMap model) {
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", userService.listRoles());
+        return "edit";
+    }
+
+    @PatchMapping(value = "/edit/{id}")
+    public String edit(@ModelAttribute("user") @Valid User user) {
+        userService.editUser(user);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
         return "redirect:/";
     }
 

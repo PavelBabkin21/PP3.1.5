@@ -6,28 +6,28 @@
 </head>
 <body>
 <br>
-<h1>Admin panel</h1>
+<h1>Administrator information</h1>
 <table border="1">
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th>Age</th>
-        <th>Username</th>
+        <th>Username (Login)</th>
         <th>Password</th>
+        <th>Role</th>
     </tr>
     <tbody>
     <tr>
         <td th:utext="${user.id}"></td>
         <td th:utext="${user.name}"></td>
-        <td th:utext="${user.age}"></td>
         <td th:utext="${user.username}"></td>
         <td th:utext="${user.password}"></td>
+        <td th:utext="${user.roles}"></td>
     </tr>
     </tbody>
 </table>
 <br><br>
 <form th:action="@{/logout}" method="post">
-    <button type="submit">Logout</button>
+    <button type="submit">Sign Out</button>
 </form>
 <br>
 <button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>

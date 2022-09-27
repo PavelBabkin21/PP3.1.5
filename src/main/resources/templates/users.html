@@ -2,9 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Users info</title>
-
-    </style>
+    <title>All users Info</title>
 </head>
 <body>
 <br>
@@ -13,17 +11,16 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th>Age</th>
-        <th>username</th>
-        <th>password</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Actions</th>
     </tr>
     <tbody>
     <tr th:each="user : ${list}">
         <td th:utext="${user.id}"></td>
         <td th:utext="${user.name}"></td>
-        <td th:utext="${user.age}"></td>
         <td th:utext="${user.username}"></td>
-        <td th:utext="${user.password}"></td>
+        <td th:utext="${user.roles}"></td>
         <td>
             <button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>
             <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete">
