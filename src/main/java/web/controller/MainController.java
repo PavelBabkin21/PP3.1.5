@@ -7,10 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import web.model.Role;
 import web.model.User;
-import web.repository.RoleRepository;
-import web.service.UserService;
+import web.service.RoleServiceImp;
+import web.service.UserServiceImp;
 
 
 import javax.validation.Valid;
@@ -18,17 +17,18 @@ import java.security.Principal;
 
 @Controller
 public class MainController {
-    private UserService userService;
-    private RoleRepository roleRepository;
+    private UserServiceImp userService;
+    private RoleServiceImp roleService;
     private PasswordEncoder passwordEncoder;
 
+
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public void setRoleRepository(RoleServiceImp roleService) {
+        this.roleService = roleService;
     }
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserServiceImp userService) {
         this.userService = userService;
     }
 
@@ -71,19 +71,15 @@ public class MainController {
 
     @GetMapping("/new")
     public String newUser(Model model) {
-        if (userService.listRoles().isEmpty()) {
-            roleRepository.save(new Role("ROLE_ADMIN"));
-            roleRepository.save(new Role("ROLE_USER"));
-        }
         model.addAttribute("user", new User());
-        model.addAttribute("roles", userService.listRoles());
+        model.addAttribute("roles", roleService.listRoles());
         return "new";
     }
 
     @PostMapping()
     public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userService.findRolesByName(role));
+        user.setRoles(roleService.findRolesByName(role));
         userService.addUser(user);
         return "redirect:/";
     }
@@ -91,7 +87,7 @@ public class MainController {
     @GetMapping(value = "/edit/{id}")
     public String editUser(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roles", userService.listRoles());
+        model.addAttribute("roles", roleService.listRoles());
         return "edit";
     }
 
@@ -103,7 +99,7 @@ public class MainController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
+        userService.delete(id);
         return "redirect:/";
     }
 
