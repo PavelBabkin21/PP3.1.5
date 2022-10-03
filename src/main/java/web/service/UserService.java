@@ -2,21 +2,23 @@ package web.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import web.model.Role;
 import web.model.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     User getUser(Long id);
 
     void addUser(User user);
 
-    List<User> listUsers();
+    Set<User> setUsers();
 
-    void editUser(User user);
+    void edit(User user, Long id);
 
     void delete(Long id);
 

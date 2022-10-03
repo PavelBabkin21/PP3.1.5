@@ -2,12 +2,14 @@ package web.dao;
 
 import web.model.Role;
 
-import java.util.List;
+import java.util.Set;
 
 public interface RoleDao {
 
-    List<Role> listRoles();
+    Set<Role> setRoles();
 
-    Role findRolesByName(String Name);
+    Set<Role> getByName(String name);
+
+    void saveRole(Role role);
 
 }

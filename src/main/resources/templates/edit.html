@@ -8,7 +8,7 @@
 <body>
 <h2> Edit User </h2>
 
-<form th:method="patch" th:object="${user}" th:action="@{/edit/{id}(id=${user.getId()})}">
+<form th:method="POST" th:object="${user}" th:action="@{/users/admin/edit/{id}(id=${user.getId()})}">
     <table>
 
         <tr>
@@ -27,10 +27,11 @@
 
         <tr>
 
-            <td th:each="role : ${roles}">
-                <input type="checkbox" th:field="*{roles}"
-                       th:value="${role.id}">
-                <label th:text="${role.role}"></label>
+            <td>Role</td>
+            <td><input type="checkbox" name="Role"
+                       th:each="role : ${roles}"
+                       th:value="${role.id}"
+                       th:text="${role.role}">
             </td>
         </tr>
 

@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 import web.dao.RoleDao;
 import web.model.Role;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class RoleServiceImp implements RoleService {
@@ -17,17 +18,24 @@ public class RoleServiceImp implements RoleService {
         this.roleDao = roleDao;
     }
 
-
-    public List<Role> listRoles() {
-        return roleDao.listRoles();
+    @Override
+    public Set<Role> setRoles() {
+        return roleDao.setRoles();
     }
 
-    public List<Role> findRolesByName(String roleName) {
-        List<Role> roles = new ArrayList<>();
-        for (Role role : listRoles()) {
-            if (roleName.contains(role.getRole()))
+    @Override
+    public Set<Role> getByName(String name) {
+        Set<Role> roles = new HashSet<>();
+        for (Role role : setRoles()) {
+            if (name.contains(role.getRole()))
                 roles.add(role);
         }
         return roles;
     }
+    @Override
+    @Transactional
+    public void saveRole(Role role) {
+        roleDao.saveRole(role);
+    }
+
 }

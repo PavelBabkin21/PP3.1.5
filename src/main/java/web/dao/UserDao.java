@@ -2,11 +2,12 @@ package web.dao;
 
 import web.model.User;
 
-import java.util.List;
+import java.util.Set;
 
 public interface UserDao {
 
-    List<User> allUsers();
+    Set<User> allUsers();
+
 
     void save(User user);
 

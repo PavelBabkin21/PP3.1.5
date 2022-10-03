@@ -14,10 +14,11 @@ import web.model.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImp implements UserService, UserDetailsService {
+public class UserServiceImp implements UserService {
 
     @Autowired
     private final UserDao userDao;
@@ -25,6 +26,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public UserServiceImp(UserDao userDao) {
         this.userDao = userDao;
     }
+
 
     @Override
     public User getUser(Long id) {
@@ -38,13 +40,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> listUsers() {
+    public Set<User> setUsers() {
         return userDao.allUsers();
     }
 
     @Override
     @Transactional
-    public void editUser(User user) {
+    public void edit(User user, Long id) {
         userDao.edit(user);
     }
 
@@ -58,6 +60,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
     }
+
 
     @Override
     @Transactional

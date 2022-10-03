@@ -30,7 +30,7 @@
     <button type="submit">Sign Out</button>
 </form>
 <br>
-<button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>
-<button><a href="/users">User table</a></button>
+<button><a th:href="@{/users/admin/edit/{id}(id=${user.id})}">Edit</a></button>
+<button><a href="admin/allUsers">User table</a></button>
 </body>
 </html>

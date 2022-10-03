@@ -22,17 +22,17 @@
         <td th:utext="${user.username}"></td>
         <td th:utext="${user.roles}"></td>
         <td>
-            <button><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></button>
-            <form th:action="@{/delete/{id}(id=${user.id})}" th:method="delete">
+            <button><a th:href="@{/users/admin/edit/{id}(id=${user.id})}">Edit</a></button>
+            <form th:action="@{/users/admin/delete/{id}(id=${user.id})}" th:method="delete">
                 <input type="submit" value="Delete"/>
             </form>
-            <button><a th:href="@{/user/{id}(id=${user.id})}">User_page</a></button>
+            <button><a th:href="@{/users/admin/{id}(id=${user.id})}">User_page</a></button>
         </td>
     </tr>
     </tbody>
 </table>
 <br>
-<button><a href="/new">Create user</a></button>
+<button><a href="/users/new">Create user</a></button>
 <br>
 </body>
 </html>
