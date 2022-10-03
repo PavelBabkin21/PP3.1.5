@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.RoleService;
 import web.service.UserService;
+
 import java.security.Principal;
 
 @Controller
@@ -41,7 +42,7 @@ public class MainController {
 
     @GetMapping("/admin/allUsers")
     public String getUsers(Model model) {
-        model.addAttribute("list", userService.setUsers());
+        model.addAttribute("list", userService.listUsers());
         return "allUsers";
     }
 
@@ -69,7 +70,7 @@ public class MainController {
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.setRoles());
+        model.addAttribute("roles", roleService.listRoles());
         return "new";
     }
 
@@ -81,14 +82,14 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "admin/edit/{id}")
+    @GetMapping(value = "/admin/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("roles", roleService.setRoles());
+        model.addAttribute("roles", roleService.listRoles());
         model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
-    @PostMapping(value = "admin/edit/{id}")
+    @PatchMapping(value = "/admin/edit/{id}")
     public String update(@PathVariable(value = "id", required = false) Long id, @ModelAttribute("user") User user,
                          @RequestParam(value = "role", required = false) String role) {
         if (role != null) {
@@ -99,7 +100,7 @@ public class MainController {
     }
 
 
-    @DeleteMapping("admin/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/";

@@ -8,7 +8,6 @@ import web.model.User;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface UserService extends UserDetailsService {
 
@@ -16,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
     void addUser(User user);
 
-    Set<User> setUsers();
+    List<User> listUsers();
 
     void edit(User user, Long id);
 

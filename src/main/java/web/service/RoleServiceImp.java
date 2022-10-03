@@ -5,37 +5,31 @@ import org.springframework.stereotype.Service;
 import web.dao.RoleDao;
 import web.model.Role;
 
-import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class RoleServiceImp implements RoleService {
-    @Autowired
-    private final RoleDao roleDao;
 
+    private final RoleDao roleDao;
+    @Autowired
     public RoleServiceImp(RoleDao roleDao) {
         this.roleDao = roleDao;
     }
 
     @Override
-    public Set<Role> setRoles() {
-        return roleDao.setRoles();
+    public List<Role> listRoles() {
+        return roleDao.listRoles();
     }
 
     @Override
-    public Set<Role> getByName(String name) {
-        Set<Role> roles = new HashSet<>();
-        for (Role role : setRoles()) {
-            if (name.contains(role.getRole()))
+    public List<Role> getByName(String name) {
+        List<Role> roles = new LinkedList<>();
+        for (Role role : listRoles()) {
+            if (name.contains(role.getName()))
                 roles.add(role);
         }
         return roles;
-    }
-    @Override
-    @Transactional
-    public void saveRole(Role role) {
-        roleDao.saveRole(role);
     }
 
 }
