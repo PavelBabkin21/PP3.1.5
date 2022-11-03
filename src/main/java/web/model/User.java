@@ -76,5 +76,6 @@ public class User implements UserDetails {
     public User() {
     }
 
+
 }
 

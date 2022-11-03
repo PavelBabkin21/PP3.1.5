@@ -11,6 +11,7 @@ import web.service.RoleService;
 import web.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -63,6 +64,7 @@ public class MainController {
     @GetMapping("/admin")
     public String adminPageForName(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
+        model.addAttribute("list", userService.listUsers());
         model.addAttribute("user", user);
         return "admin";
     }
