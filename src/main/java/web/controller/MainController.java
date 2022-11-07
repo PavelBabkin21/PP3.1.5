@@ -64,31 +64,26 @@ public class MainController {
     @GetMapping("/admin")
     public String adminPageForName(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", new User());
         model.addAttribute("list", userService.listUsers());
+        model.addAttribute("roles", roleService.listRoles());
         model.addAttribute("user", user);
         return "admin";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/new4")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.listRoles());
         return "new";
     }
 
-    @PostMapping()
+    @PostMapping("/new")
     public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roleService.getByName(role));
         userService.addUser(user);
-        return "redirect:/";
-    }
-
-    @GetMapping(value = "/admin/edit/{id}")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("roles", roleService.listRoles());
-        model.addAttribute("user", userService.getUser(id));
-        return "edit";
+        return "redirect:/users/admin";
     }
 
     @PatchMapping(value = "/admin/edit/{id}")
@@ -97,15 +92,16 @@ public class MainController {
         if (role != null) {
             user.setRoles(roleService.getByName(role));
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.edit(user, id);
-        return "redirect:/";
+        return "redirect:/users/admin";
     }
 
 
     @DeleteMapping("/admin/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
-        return "redirect:/";
+        return "redirect:/users/admin";
     }
 
 
