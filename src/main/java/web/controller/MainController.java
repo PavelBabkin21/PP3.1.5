@@ -11,7 +11,6 @@ import web.service.RoleService;
 import web.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -36,22 +35,6 @@ public class MainController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping()
-    public String welcomeUsers() {
-        return "index";
-    }
-
-    @GetMapping("/admin/allUsers")
-    public String getUsers(Model model) {
-        model.addAttribute("list", userService.listUsers());
-        return "allUsers";
-    }
-
-    @GetMapping("/admin/{id}")
-    public String userPage(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUser(id));
-        return "user";
-    }
 
     @GetMapping("/user")
     public String userPageForName(Model model, Principal principal) {
@@ -69,13 +52,6 @@ public class MainController {
         model.addAttribute("roles", roleService.listRoles());
         model.addAttribute("user", user);
         return "admin";
-    }
-
-    @GetMapping("/new4")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.listRoles());
-        return "new";
     }
 
     @PostMapping("/new")
