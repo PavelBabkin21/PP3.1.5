@@ -21,7 +21,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
-public class MainController {
+public class AdminController {
     private UserService userService;
     private RoleService roleService;
     private PasswordEncoder passwordEncoder;
@@ -42,14 +42,6 @@ public class MainController {
         this.passwordEncoder = passwordEncoder;
     }
 
-
-    @GetMapping("/user")
-    public String userPageForName(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        model.addAttribute("user", user);
-        return "user";
-    }
 
     @GetMapping("/admin")
     public String adminPageForName(Model model, Principal principal) {

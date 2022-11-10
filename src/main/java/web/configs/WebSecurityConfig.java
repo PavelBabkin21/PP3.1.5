@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import web.service.UserDetailsServiceImp;
 import web.service.UserServiceImp;
 
 
@@ -17,14 +18,15 @@ import web.service.UserServiceImp;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final SuccessUserHandler successUserHandler;
-    private final UserServiceImp userService;
 
-    @Autowired
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImp userService) {
+    private final SuccessUserHandler successUserHandler;
+    private final UserDetailsServiceImp userDetailsServiceImp;
+
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsServiceImp userDetailsServiceImp) {
         this.successUserHandler = successUserHandler;
-        this.userService = userService;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(userDetailsServiceImp);
         return authenticationProvider;
     }
 }

@@ -63,7 +63,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    @ManyToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;

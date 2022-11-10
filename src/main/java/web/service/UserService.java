@@ -1,15 +1,13 @@
 package web.service;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import web.model.Role;
 import web.model.User;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     User getUser(Long id);
 
@@ -23,7 +21,6 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
-    UserDetails loadUserByUsername(String username);
 
     Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles);
 
