@@ -54,7 +54,7 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
+    public String userCreat(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roleService.getByName(role));
         userService.addUser(user);
