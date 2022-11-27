@@ -18,7 +18,7 @@ public class RestUserController {
     private final UserService userService;
 
     @Autowired
-    RestUserController (UserService userService) {
+    RestUserController(UserService userService) {
         this.userService = userService;
     }
 
