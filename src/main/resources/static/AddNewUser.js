@@ -6,7 +6,7 @@ async function addNewUser(){
 
     allRoles().then(roles => {
         roles.forEach(role => {
-            let option = new Option(role.roles.substring(5), role.id);
+            let option = new Option(role.name, role.id);
             $('#newUserRoles').append(option);
         })
     })
@@ -19,7 +19,7 @@ async function addNewUser(){
 
         let newUser = await userData(form);
 
-        fetch("/admin/api/admin", {
+        fetch("/api/admin", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

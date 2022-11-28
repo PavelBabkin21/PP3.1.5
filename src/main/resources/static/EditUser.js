@@ -9,8 +9,8 @@ async function editUser(id){
 
     await allRoles().then(roles => {
         roles.forEach(role => {
-            let option = new Option(role.roles.substring(5), role.id);
-            option.setAttribute("id", role.roles);
+            let option = new Option(role.name, role.id);
+            option.setAttribute("id", role.name);
             $('#editUserRoles').append(option);
         })
     })
@@ -18,13 +18,11 @@ async function editUser(id){
     await showUserById(id).then(user => {
         $('#editUserId').val(user.id)
         $('#editUserName').val(user.name)
-        $('#editUserSurname').val(user.surname)
-        $('#editUserAge').val(user.age)
+        $('#editUserSurname').val(user.username)
         $('#editUserPassword').val(user.password)
-        $('#editUserEmail').val(user.email)
 
-        user.roles.forEach(role => {console.log(role.roles.substring(5));
-            document.getElementById(role.roles).selected = true;
+        user.roles.forEach(role => {console.log(role.name);
+            document.getElementById(role.name).selected = true;
         })
     })
 
@@ -35,7 +33,7 @@ async function editUser(id){
 
         let edituser = await userData(form);
 
-        fetch("/admin/api/admin/" + id, {
+        fetch("/api/admin/" + id, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',

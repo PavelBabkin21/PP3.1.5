@@ -3,7 +3,7 @@ $(async function (id) {
 });
 
 async function showUserById(id) {
-    let response = await fetch("/admin/api/admin/" + id,
+    let response = await fetch("/api/admin/" + id,
         {
             headers: {
                 'Accept': 'application/json',

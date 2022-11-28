@@ -11,7 +11,7 @@
 </head>
 <body class="bg-light">
 <div class="container col-md-2">
-    <form class="form-signin pt-5" method="post" th:action="process_login">
+    <form class="form-signin pt-5" method="post" th:action="processingUrl">
         <h3 class="form-signin-heading pb-2"><strong>Please sign in</strong></h3>
         <input type="text" class="form-control" name="username" id="username" placeholder="Username">
         <input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
@@ -19,7 +19,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </div>
         <div th:if="${param.error}" style="color: red">
-            Неправильные имя пользователя или пароль
+            Incorrect username or password
         </div>
     </form>
 </div>

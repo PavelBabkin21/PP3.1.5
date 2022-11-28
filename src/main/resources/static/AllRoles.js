@@ -4,7 +4,7 @@ $(async function () {
 
 async function allRoles() {
 
-    let response = await fetch("/admin/api/roles",
+    let response = await fetch("/api/roles",
         {
             headers: {
                 'Accept': 'application/json',

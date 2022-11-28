@@ -34,13 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/api/**").permitAll()
-                .antMatchers("api/admin/**").hasRole("ADMIN")
+                .antMatchers("/login", "/api/**").permitAll()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").usernameParameter("username").loginProcessingUrl("/process_login").permitAll()
+                .loginPage("/login").usernameParameter("username").loginProcessingUrl("/processingUrl").permitAll()
                 .successHandler(successUserHandler)
                 .failureUrl("/login?error");
     }

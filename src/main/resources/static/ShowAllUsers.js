@@ -4,7 +4,7 @@ $(async function () {
 
 async function showUsersTable() {
     const table = $('#allUserTable').empty();
-    fetch("/admin/api/admin", {
+    fetch("/api/admin", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -18,10 +18,8 @@ async function showUsersTable() {
                     <tr>
                         <td>${user.id}</td>
                         <td>${user.name}</td>
-                        <td>${user.surname}</td>
-                        <td>${user.age}</td>
-                        <td>${user.email}</td>
-                        <td>${user.roles.map(role => " " + role.roles.substring(5))}</td>
+                        <td>${user.username}</td>
+                        <td>${user.roles.map(role => " " + role.name)}</td>
                         <td>
                              <button type="button" class="btn btn-success btn btn-info modal-open" id="editbutton"
                              onclick="editUser(${user.id})" data-toggle="modal" data-target="#modalEdit">

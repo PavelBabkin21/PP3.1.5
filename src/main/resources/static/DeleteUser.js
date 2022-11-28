@@ -7,11 +7,9 @@ async function deleteUser(id){
     await showUserById(id).then(user => {
         $('#deleteUserId').val(user.id)
         $('#deleteUserName').val(user.name)
-        $('#deleteUserSurname').val(user.surname)
-        $('#deleteUserAge').val(user.age)
-        $('#deleteUserEmail').val(user.email)
+        $('#deleteUserSurname').val(user.username)
         user.roles.forEach(role => {
-            let option = new Option(role.roles.substring(5), role.id);
+            let option = new Option(role.name, role.id);
             $('#deleteUserRoles').append(option);
         })
     })
@@ -21,7 +19,7 @@ async function deleteUser(id){
 
     async function delProcess(event) {
         event.preventDefault();
-        fetch("/admin/api/admin/" + id, {
+        fetch("/api/admin/" + id, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
