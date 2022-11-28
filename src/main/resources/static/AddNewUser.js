@@ -2,7 +2,7 @@ $(async function () {
     await addNewUser();
 });
 
-async function addNewUser(){
+async function addNewUser() {
 
     allRoles().then(roles => {
         roles.forEach(role => {

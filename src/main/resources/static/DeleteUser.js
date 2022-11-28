@@ -2,12 +2,12 @@ $(async function (id) {
     await deleteUser(id);
 });
 
-async function deleteUser(id){
+async function deleteUser(id) {
 
     await showUserById(id).then(user => {
         $('#deleteUserId').val(user.id)
-        $('#deleteUserName').val(user.name)
-        $('#deleteUserSurname').val(user.username)
+        $('#deleteName').val(user.name)
+        $('#deleteUsername').val(user.username)
         user.roles.forEach(role => {
             let option = new Option(role.name, role.id);
             $('#deleteUserRoles').append(option);

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,11 +26,14 @@ public class RestAdminController {
 
     private final RoleService roleService;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    RestAdminController(UserService userService, RoleService roleService) {
+    RestAdminController(UserService userService, RoleService roleService,
+                        PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/admin")
@@ -51,6 +55,7 @@ public class RestAdminController {
 
     @PostMapping("admin")
     public ResponseEntity<User> addNewUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
@@ -69,6 +74,7 @@ public class RestAdminController {
 
     @PatchMapping("/admin/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long id) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.edit(user, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

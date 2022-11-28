@@ -82,19 +82,23 @@
                                                     <div class="col-sm-4">
                                                         <strong><label>Name</label></strong>
                                                         <br/>
-                                                        <input type="text" class="form-control" id="newUserName" name="name"/>
+                                                        <input type="text" class="form-control" id="newUserName"
+                                                               name="name"/>
                                                         <br/>
                                                         <strong><label>Username</label></strong>
                                                         <br/>
-                                                        <input type="text" class="form-control" id="newUserSurname" name="username"/>
+                                                        <input type="text" class="form-control" id="newUserSurname"
+                                                               name="username"/>
                                                         <br/>
                                                         <strong><label>Password</label></strong>
                                                         <br/>
-                                                        <input type="password" class="form-control" id="newUserPassword" name="password"/>
+                                                        <input type="password" class="form-control" id="newUserPassword"
+                                                               name="password"/>
                                                         <br/>
                                                         <strong><label>Role</label></strong>
                                                         <br/>
-                                                        <select class="form-control" size="2" multiple="multiple" id="newUserRoles" name="roles"></select>
+                                                        <select class="form-control" size="2" multiple="multiple"
+                                                                id="newUserRoles" name="roles"></select>
                                                     </div>
                                                 </div>
                                                 <button type="submit" class="btn btn-success">Add new user</button>
@@ -128,10 +132,10 @@
                         <input readonly type="text" class="form-control" id="editUserId" name="id"/>
                         <br/>
                         <strong><label>Name</label></strong>
-                        <input type="text" class="form-control" id="editUserName" name="name"/>
+                        <input type="text" class="form-control" id="editName" name="name"/>
                         <br/>
                         <strong><label>Username</label></strong>
-                        <input type="text" class="form-control" id="editUserSurname" name="username"/>
+                        <input type="text" class="form-control" id="editUsername" name="username"/>
                         <br/>
                         <strong><label>Password</label></strong>
                         <br/>
@@ -145,7 +149,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="editFormCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="editFormCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
                     <input type="submit" class="btn btn-primary" value="Edit"/>
                 </div>
             </div>
@@ -154,7 +160,7 @@
 </div>
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" data-
      aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <form id="deleteUserForm" >
+    <form id="deleteUserForm">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-left">
@@ -170,22 +176,23 @@
                         <br/>
                         <strong><label>Name</label></strong>
                         <br/>
-                        <input disabled type="text" class="form-control" id="deleteUserName" name="name"/>
+                        <input disabled type="text" class="form-control" id="deleteName" name="name"/>
                         <br/>
                         <strong><label>Username</label></strong>
                         <br/>
-                        <input disabled type="text" class="form-control" id="deleteUserSurname" name="username"/>
+                        <input disabled type="text" class="form-control" id="deleteUsername" name="username"/>
                         <br/>
                         <strong><label>Role</label></strong>
                         <br/>
-                        <select disabled class="form-control" size="2" multiple="multiple" id="deleteUserRoles"}>
-                            <option >
+                        <select disabled class="form-control" size="2" multiple="multiple" id="deleteUserRoles" }>
+                            <option>
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="delFormCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="delFormCloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
                     <button type="submit" class="btn btn-danger btn-success">Delete</button>
                 </div>
             </div>
