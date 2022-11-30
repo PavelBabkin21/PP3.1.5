@@ -44,8 +44,7 @@ public class RestAdminController {
 
     @GetMapping("/admin/{id}")
     public ResponseEntity<User> showUser(@PathVariable Long id) {
-        User user = userService.getUser(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
     @GetMapping("/authUser")
@@ -62,8 +61,7 @@ public class RestAdminController {
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> allRoles = roleService.listRoles();
-        return new ResponseEntity<>(allRoles, HttpStatus.OK);
+        return new ResponseEntity<>(roleService.listRoles(), HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/{id}")
